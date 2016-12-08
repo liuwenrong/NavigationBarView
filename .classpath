@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="lib" path="D:/Android/coolpad/systemui6.0_jar/framework.jar" sourcepath="D:/Android/AS_SDK/sources/android-23"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="lib" path="D:/Android/coolpad/systemui6.0_jar/services.jar" sourcepath="D:/Android/sdk/sources"/>
+	<classpathentry kind="lib" path="D:/Android/coolpad/systemui6.0_jar/android-common.jar"/>
+	<classpathentry kind="lib" path="D:/Android/coolpad/systemui6.0_jar/core-libart.jar"/>
+	<classpathentry kind="lib" path="D:/Android/coolpad/systemui6.0_jar/CP_Common.jar"/>
+	<classpathentry kind="lib" path="D:/Android/coolpad/systemui6.0_jar/CP_MiscInterface.jar"/>
+	<classpathentry kind="lib" path="D:/Android/coolpad/systemui6.0_jar/CP_MiscInterfaceDebug.jar"/>
+	<classpathentry kind="lib" path="D:/Android/coolpad/systemui6.0_jar/CP_SystemInterface.jar"/>
+	<classpathentry kind="lib" path="D:/Android/coolpad/systemui6.0_jar/ext.jar"/>
+	<classpathentry kind="lib" path="D:/Android/coolpad/systemui6.0_jar/libphonenumber.jar"/>
+	<classpathentry kind="lib" path="D:/Android/coolpad/systemui6.0_jar/SettingsLib.jar"/>
+	<classpathentry kind="lib" path="D:/Android/coolpad/systemui6.0_jar/telephony-common.jar"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

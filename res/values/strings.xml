@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NavigationBarView</string>
+    <string name="status_bar_expanded_check_sim">请检查 SIM卡</string>
+     <string name="status_bar_expanded_start_network">移动数据</string>
+    <string name="status_bar_expanded_stop_network">移动数据</string>
+    <string name="status_bar_expanded_start_network_g">数据开关</string>
+    <string name="status_bar_expanded_stop_network_g">数据开关</string>
+</resources>

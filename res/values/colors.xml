@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="navigation_bar_icon_color">#E5FFFFFF</color>
+    <color name="system_bar_background_opaque">#ff000000</color>
+    <color name="system_bar_background_semi_transparent">#00000000</color>
+    <color name="system_bar_background_transparent">#00000000</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="blur_background_default_color">#4f4f4f</color>
+
+</resources>

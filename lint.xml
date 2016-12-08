@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="ExtraTranslation">
+        <ignore path="res/values-ch-rCN/strings.xml" />
+    </issue>
+    <issue id="MissingTranslation">
+        <ignore path="res/values/strings.xml" />
+    </issue>
+    <issue id="ServiceCast" severity="ignore">
+        <ignore path="src/com/example/liuwenrong/navigationbarview/MainActivity.java" />
+    </issue>
+</lint>

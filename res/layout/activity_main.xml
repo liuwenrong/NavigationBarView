@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:systemui="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.liuwenrong.navigationbarview.MainActivity">
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:text="APK显示NavigationBar和简单交互" />
+    <EditText 
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_below="@id/text_view"
+        android:padding="10dp"
+        />
+    <Button 
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:layout_below="@id/edit_text"
+        android:text="hide system navigationBar"
+        />
+    
+    <Button 
+        android:id="@+id/btn_show_bs_nav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:layout_below="@id/btn"
+        android:text="show BackSrceen Navigation Bar"
+        />
+    
+    <Button 
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:layout_below="@id/btn_show_bs_nav"
+        android:text="close"
+        />
+    <Button 
+        android:id="@+id/btn_switch_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:layout_below="@id/btn_close"
+        android:text="切换屏幕"
+        />
+
+    <LinearLayout
+        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:id="@+id/nav_buttons"
+        android:background="#000"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:animateLayoutChanges="false"
+        >
+
+        <!-- navigation controls -->
+        <com.android.systemui.statusbar.policy.KeyButtonView
+            android:id="@+id/menu_yulong"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_sysbar_menu_outside"
+            systemui:keyCode="82"
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp"
+            android:visibility="visible"
+            android:scaleType="centerInside"
+            android:contentDescription="@string/accessibility_menu"
+            />
+        <com.android.systemui.statusbar.policy.KeyButtonView
+            android:id="@+id/recent_apps"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_sysbar_recent"
+            android:layout_weight="2"
+            systemui:keyCode="10086"
+            android:padding="20dp"
+            android:layout_marginLeft="0dp"
+            android:scaleType="centerInside"
+            android:contentDescription="@string/accessibility_back"
+            />
+
+        <com.android.systemui.statusbar.policy.KeyButtonView
+            android:id="@+id/home"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_sysbar_home"
+            systemui:keyCode="3"
+            android:padding="20dp"
+            systemui:keyRepeat="true"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerInside"
+            android:layout_weight="2"
+            android:contentDescription="@string/accessibility_home"
+            />
+
+        <com.android.systemui.statusbar.policy.KeyButtonView
+            android:id="@+id/back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_sysbar_back"
+            systemui:keyCode="4"
+            android:scaleType="centerInside"
+            android:padding="20dp"
+            android:layout_weight="2"
+            android:contentDescription="@string/accessibility_recent"
+            />
+        <com.android.systemui.statusbar.policy.KeyButtonView
+            android:id="@+id/hide"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_sysbar_hide"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:layout_marginRight="16dp"
+            android:visibility="visible"
+            android:contentDescription="@string/accessibility_hide"
+            />
+        <FrameLayout
+            android:layout_width="@dimen/navigation_extra_key_width"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:visibility="visible">
+            <com.android.systemui.statusbar.policy.KeyButtonView
+                android:id="@+id/menu"
+                android:layout_width="@dimen/navigation_extra_key_width"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/accessibility_menu"
+                android:src="@drawable/ic_sysbar_menu"
+                android:visibility="invisible"
+                systemui:keyCode="82" />
+
+            <com.android.systemui.statusbar.policy.KeyButtonView
+                android:id="@+id/ime_switcher"
+                android:layout_width="@dimen/navigation_extra_key_width"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/accessibility_ime_switch_button"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_ime_switcher_default"
+                android:visibility="invisible" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
