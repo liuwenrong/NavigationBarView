@@ -77,21 +77,21 @@ public class PhoneStatusBar extends BaseStatusBar {
 	};
 	
 	WindowManagerImpl outerWindowManager;
+	// Type 为 NavigationBar是 removeView()后 在 add 报错 试着延时一秒加
 	public void switchDisplay(){
-		count ++;
-		LogHelper.logE(TAG, "count = " + count);
-		if(count%2 == 0){
-			if(count > 0){
-				wmiBS.removeViewImmediate(mNavigationBarView);
-			}
-//			mHandler.sendEmptyMessageDelayed(1, 500);
-			wmi.addView(mNavigationBarView, getNavigationBarLayoutParams()); 
-		}else if(count%2 == 1){
+		if(navIsAddBS()){
+			wmiBS.removeViewImmediate(mNavigationBarView);
+			wmi.addView(mNavigationBarView, getNavigationBarLayoutParams());
+			navIsAddBS = false;
+		}else{
 			wmi.removeViewImmediate(mNavigationBarView);
-//			mHandler.sendEmptyMessageDelayed(0, 500);
 			wmiBS.addView(mNavigationBarView, getBSNavigationBarLayoutParams());
-			  // Type 为 NavigationBar是 remove后 在 add 报错 试着延时一秒加
+			navIsAddBS = true;
 		}
+	}
+	private boolean navIsAddBS = false;
+	public boolean navIsAddBS(){
+		return navIsAddBS;
 	}
 	Display[] displays;
 	@Override
@@ -407,6 +407,7 @@ public class PhoneStatusBar extends BaseStatusBar {
 
 		lp.setTitle("BSNavigationBar");
 		lp.windowAnimations = 0;
+		LogHelper.logE(TAG,"lp = " + lp.toString());
 		return lp;
 	}
 	private WindowManager.LayoutParams getBSNavigationBarLayoutParams() {
@@ -427,6 +428,7 @@ public class PhoneStatusBar extends BaseStatusBar {
 		lp.gravity = Gravity.BOTTOM;
 		lp.setTitle("BSNavigationBar");
 		lp.windowAnimations = 0;
+		LogHelper.logE(TAG,"lp = " + lp.toString());
 		return lp;
 	}
 
