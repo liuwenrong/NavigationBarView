@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:systemui="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.liuwenrong.navigationbarview.MainActivity">
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:text="通知" />
+    <EditText 
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_below="@id/text_view"
+        android:padding="10dp"
+        />
+    <Button 
+        android:id="@+id/btn_send_notifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:layout_below="@id/edit_text"
+        android:text="sendNotification"
+        />
+    
+    <Button 
+        android:id="@+id/btn_get_notifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:layout_below="@id/btn_send_notifi"
+        android:text="getNotification"
+        />
+    
+    <Button 
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:layout_below="@id/btn_get_notifi"
+        android:text="close"
+        />
+    <Button 
+        android:id="@+id/btn_set_auth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:layout_below="@id/btn_close"
+        android:text="设置权限"
+        />
+
+    
+
+</RelativeLayout>

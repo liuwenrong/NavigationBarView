@@ -2,7 +2,9 @@ package com.example.liuwenrong.navigationbarview;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.StatusBarManager;
+import android.app.admin.DeviceAdminReceiver;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -14,7 +16,6 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManagerGlobal;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
@@ -24,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.systemui.helper.LogHelper;
-import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
 
 
@@ -69,6 +69,7 @@ public class MainActivity extends Activity {
 		btnClose = (Button) findViewById(R.id.btn_close);
 		btnShowBsNav = (Button) findViewById(R.id.btn_show_bs_nav);
 		btnSwitchDisplay = (Button) findViewById(R.id.btn_switch_display);
+		btn.setText("oneKeyScreenOff");
 		btn.setOnClickListener(onBtnClickListener);
 		btnShowBsNav.setOnClickListener(onBtnShowBsNavClickListener);
 		btnClose.setOnClickListener(onHomeClickListener);
@@ -259,10 +260,27 @@ public class MainActivity extends Activity {
 
 			LogHelper.logE(TAG, "mContext="+mContext.toString() + "  getApplicationContext" + MainActivity.this.getApplicationContext());
 
-			mStatusBar.start();
+//			mStatusBar.start();
+//			mStatusBar.registerReceiver();
 		}
 		//            mStatusBar.mComponents = mComponents;
+		goNotificationActivity();
 
+	}
+	//跳转 发送通知的Activity
+	private void goNotificationActivity(){
+		startNotificationListenerService();
+		Intent intent = new Intent(this, NotificationActivity.class);
+		startActivity(intent);
+	}
+	//开启监听通知的服务
+	private void startNotificationListenerService(){
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2){
+			Intent intent = new Intent(this, MyNotificationListenerService.class);
+			startService(intent);
+		}else{
+			Toast.makeText(getApplicationContext(), "当前手机系统不支持此功能", Toast.LENGTH_SHORT).show();
+		}
 	}
 	private WindowManager.LayoutParams getNavigationBarLayoutParams() {
 		WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
@@ -292,10 +310,26 @@ public class MainActivity extends Activity {
 			//        	PhoneWindowManager pwm = new PhoneWindowManager();
 			//        	pwm.showRecentApps();
 			//        	InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-			hideNav();
+//			hideNav();
+			oneKeyScreenOff();
 
 		}
 	};
+	
+	public void oneKeyScreenOff(){
+		DevicePolicyManager devicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+
+        ComponentName componentName = new ComponentName(this, DeviceAdminReceiver.class);
+
+        if(!devicePolicyManager.isAdminActive(componentName)){
+            Intent intent =
+                    new  Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+            intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "----这是一键锁屏激活界面-----");
+            startActivityForResult(intent, 0);
+        }
+        devicePolicyManager.lockNow();
+	}
 
 	public void hideNav(){
 		sHandler.post(mHideRunnable); // hide the navigation bar  
@@ -339,7 +373,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-		Toast.makeText(getApplicationContext(), "点击了键----> KeyCode=="+keyCode, Toast.LENGTH_SHORT).show();
+//		Toast.makeText(getApplicationContext(), "点击了键----> KeyCode=="+keyCode, Toast.LENGTH_SHORT).show();
 
 		if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
 			if((System.currentTimeMillis()-exitTime) > 2000){
