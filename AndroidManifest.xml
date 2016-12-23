@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.example.liuwenrong.navigationbarview" android:versionCode="1"
 	android:versionName="1.0">
-<!-- 	android:sharedUserId="android.uid.system"  -->
+<!-- 	android:sharedUserId="android.uid.system" -->
 
 	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -24,10 +24,12 @@
 		<activity 
 		android:name="com.android.systemui.statusbar.phone.ShowNavigationHideInfoActivity"
 		>
+		
 		</activity>
 		
 		<activity
-		android:name=".NotificationActivity">
+		android:name=".NotificationActivity" android:label="@string/app_name">
+		
 		</activity>
 
 		<!-- 监听锁屏解锁时的广播 -->

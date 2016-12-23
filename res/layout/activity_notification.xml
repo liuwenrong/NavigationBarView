@@ -15,13 +15,14 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:padding="10dp"
+        android:visibility="invisible"
         android:text="通知" />
     <EditText 
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:layout_below="@id/text_view"
+        android:layout_toRightOf="@id/text_view"
         android:padding="10dp"
         />
     <Button 
@@ -30,6 +31,7 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:padding="10dp"
+        android:visibility="invisible"
         android:layout_below="@id/edit_text"
         android:text="sendNotification"
         />
@@ -40,7 +42,7 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:padding="10dp"
-        android:layout_below="@id/btn_send_notifi"
+        android:layout_below="@id/edit_text"
         android:text="getNotification"
         />
     
@@ -52,6 +54,7 @@
         android:padding="10dp"
         android:layout_below="@id/btn_get_notifi"
         android:text="close"
+        android:visibility="invisible"
         />
     <Button 
         android:id="@+id/btn_set_auth"
@@ -62,6 +65,8 @@
         android:layout_below="@id/btn_close"
         android:text="设置权限"
         />
+    
+    
 
     
 

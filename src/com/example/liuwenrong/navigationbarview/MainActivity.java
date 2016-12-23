@@ -260,11 +260,11 @@ public class MainActivity extends Activity {
 
 			LogHelper.logE(TAG, "mContext="+mContext.toString() + "  getApplicationContext" + MainActivity.this.getApplicationContext());
 
-//			mStatusBar.start();
+			mStatusBar.start();
 //			mStatusBar.registerReceiver();
 		}
 		//            mStatusBar.mComponents = mComponents;
-		goNotificationActivity();
+//		goNotificationActivity();
 
 	}
 	//跳转 发送通知的Activity
@@ -274,14 +274,32 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	//开启监听通知的服务
-	private void startNotificationListenerService(){
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2){
-			Intent intent = new Intent(this, MyNotificationListenerService.class);
-			startService(intent);
-		}else{
-			Toast.makeText(getApplicationContext(), "当前手机系统不支持此功能", Toast.LENGTH_SHORT).show();
+		private void startNotificationListenerService(){
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2){
+				Intent intent = new Intent(this, MyNotificationListenerService.class);
+//				this.bindService(intent, conn, Context.BIND_AUTO_CREATE);
+				startService(intent);
+				
+			}else{
+				Toast.makeText(getApplicationContext(), "当前手机系统不支持此功能", Toast.LENGTH_SHORT).show();
+			}
 		}
-	}
+		
+		@Override
+		public void onDestroy(){
+			LogHelper.logE(TAG, "291-----onDestroy");
+			stopNotificationListenerService();
+			super.onDestroy();
+		}
+		private void stopNotificationListenerService(){
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2){
+				Intent intent = new Intent(this, MyNotificationListenerService.class);
+				stopService(intent);
+			}else{
+				Toast.makeText(getApplicationContext(), "当前手机系统不支持此功能", Toast.LENGTH_SHORT).show();
+			}
+		}
+		
 	private WindowManager.LayoutParams getNavigationBarLayoutParams() {
 		WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
@@ -381,7 +399,7 @@ public class MainActivity extends Activity {
 				exitTime = System.currentTimeMillis();
 			} else {
 				finish();
-				System.exit(0);
+//				System.exit(0);
 			}
 			return true;
 		}else if(keyCode == KeyEvent.KEYCODE_HOME && event.getAction() == KeyEvent.ACTION_DOWN){
