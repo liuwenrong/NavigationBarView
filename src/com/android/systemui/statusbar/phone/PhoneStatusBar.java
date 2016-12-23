@@ -5,7 +5,10 @@ import android.app.ActivityManagerNative;
 import android.app.IActivityManager;
 import android.app.NotificationManager;
 import android.app.StatusBarManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
@@ -34,6 +37,7 @@ import android.view.WindowManager.LayoutParams;
 import android.view.WindowManagerImpl;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.systemui.helper.LogHelper;
@@ -77,22 +81,59 @@ public class PhoneStatusBar extends BaseStatusBar {
 	};
 	
 	WindowManagerImpl outerWindowManager;
+	// Type 为 NavigationBar是 removeView()后 在 add 报错 试着延时一秒加
 	public void switchDisplay(){
-		count ++;
-		LogHelper.logE(TAG, "count = " + count);
-		if(count%2 == 0){
-			if(count > 0){
-				wmiBS.removeViewImmediate(mNavigationBarView);
-			}
-//			mHandler.sendEmptyMessageDelayed(1, 500);
-			wmi.addView(mNavigationBarView, getNavigationBarLayoutParams()); 
-		}else if(count%2 == 1){
+		if(navIsAddBS()){
+			wmiBS.removeViewImmediate(mNavigationBarView);
+			wmi.addView(mNavigationBarView, getNavigationBarLayoutParams());
+			navIsAddBS = false;
+		}else{
 			wmi.removeViewImmediate(mNavigationBarView);
-//			mHandler.sendEmptyMessageDelayed(0, 500);
 			wmiBS.addView(mNavigationBarView, getBSNavigationBarLayoutParams());
-			  // Type 为 NavigationBar是 remove后 在 add 报错 试着延时一秒加
+			navIsAddBS = true;
 		}
 	}
+	private boolean navIsAddBS = false;
+	public boolean navIsAddBS(){
+		return navIsAddBS;
+	}
+	
+	// 注册广播监听
+	public void registerReceiver(){
+		IntentFilter mScreenOnOrOffFilter = new IntentFilter();
+		mScreenOnOrOffFilter.addAction("android.intent.action.SCREEN_ON");
+		mScreenOnOrOffFilter.addAction("android.intent.action.SCREEN_OFF");
+		mScreenOnOrOffFilter.addAction("android.intent.action.USER_PRESENT");
+		mContext.registerReceiver(mScreenOnOrOffReceiver, mScreenOnOrOffFilter);
+	}
+	//解除广播监听
+	public void unRegisterReceiver(){
+		if(mScreenOnOrOffReceiver != null){
+			mContext.unregisterReceiver(mScreenOnOrOffReceiver);
+		}
+	}
+	// 监听 点亮和熄灭屏幕的广播
+	private BroadcastReceiver mScreenOnOrOffReceiver = new BroadcastReceiver(){
+		@Override
+		public void onReceive(Context context, Intent intent){
+			String action = intent.getAction();
+			LogHelper.logE(TAG, "120--intent.getAction = " + intent.getAction());
+			if(action.equals("android.intent.action.SCREEN_ON")){
+				// 亮屏 TODO
+				if(navIsAddBS()){
+					LogHelper.logE(TAG, "124--切换到主屏");
+					switchDisplay();
+				}
+			}
+			if(action.equals("android.intent.action.SCREEN_OFF")){
+				if(!navIsAddBS()){
+					LogHelper.logE(TAG, "129--切换到副屏");
+					switchDisplay();
+				}
+			}
+		}
+	};
+	
 	Display[] displays;
 	@Override
 	public void start() {
@@ -112,7 +153,8 @@ public class PhoneStatusBar extends BaseStatusBar {
 //		wmi = new WindowManagerImpl(mDisplay);
 		outerWindowManager = (WindowManagerImpl) mContext.getSystemService(Context.WINDOW_SERVICE);
 		if(wmi == null){
-			wmi = outerWindowManager.createPresentationWindowManager(displays[0]);
+//			wmi = outerWindowManager.createPresentationWindowManager(displays[0]);
+			wmi = outerWindowManager;
 		}
 		if(wmiBS == null){
 			wmiBS = outerWindowManager.createPresentationWindowManager(displays[1]);
@@ -129,7 +171,8 @@ public class PhoneStatusBar extends BaseStatusBar {
 		= (MediaSessionManager) mContext.getSystemService(Context.MEDIA_SESSION_SERVICE);
 		// TODO: use MediaSessionManager.SessionListener to hook us up to future updates
 		// in session state
-
+		// 注册广播接收器
+		registerReceiver();
 		addNavigationBar();
 		
 
@@ -407,6 +450,7 @@ public class PhoneStatusBar extends BaseStatusBar {
 
 		lp.setTitle("BSNavigationBar");
 		lp.windowAnimations = 0;
+		LogHelper.logE(TAG,"lp = " + lp.toString());
 		return lp;
 	}
 	private WindowManager.LayoutParams getBSNavigationBarLayoutParams() {
@@ -427,6 +471,7 @@ public class PhoneStatusBar extends BaseStatusBar {
 		lp.gravity = Gravity.BOTTOM;
 		lp.setTitle("BSNavigationBar");
 		lp.windowAnimations = 0;
+		LogHelper.logE(TAG,"lp = " + lp.toString());
 		return lp;
 	}
 
